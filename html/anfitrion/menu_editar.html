@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Propiedad - OpenLodge</title>
+    <link rel="stylesheet" href="/css/anfitrion/menu_editar.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+            <div class="top-controls">
+                <button onclick="window.location.href='/html/anfitrion/menu_anfitrion.html'">Menú principal</button>
+                <button onclick="window.location.href='/html/anfitrion/menu_micuenta.html'">Mi Cuenta</button>
+                <button id="gestionarBtn" onclick="window.location.href='/html/anfitrion/menu_gestionar.html'">Gestionar
+                    reservas</button>
+                <button id="publicarBtn" onclick="window.location.href='/html/anfitrion/menu_publicar.html'">Publicar
+                    propiedad</button>
+                <button class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <form id="formEditar" class="formulario">
+                <div class="campo full">
+                    <label for="titulo">Título de la Publicación:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+
+                <div class="campo full">
+                    <label for="direccion">Dirección de la propiedad:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                </div>
+
+                <div class="campo">
+                    <label>Seleccione servicios a incluir:</label>
+                    <div class="servicios" id="servicios-container">
+                        <p>Cargando servicios...</p>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="precioPorNoche">Precio por Noche (ARS):</label>
+                    <input type="number" id="precioPorNoche" name="precioPorNoche" min="1" required>
+                </div>
+
+                <div class="campo">
+                    <label for="numeroHuespedes">Cantidad de huéspedes:</label>
+                    <input type="number" id="numeroHuespedes" name="numeroHuespedes" min="1" max="20" required>
+                </div>
+
+                <div class="campo full">
+                    <label for="descripcion">Descripción de la propiedad:</label>
+                    <textarea id="descripcion" name="descripcion" rows="5"></textarea>
+                </div>
+
+                <div class="acciones">
+                    <button type="submit" class="btn-primary">Guardar cambios</button>
+                    <button type="button" id="cancelarBtn" class="btn-danger">Cancelar</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="/js/menu_editar.js"></script>
+</body>
+
+</html>

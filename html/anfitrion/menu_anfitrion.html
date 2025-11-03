@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Anfitrion - OpenLodge</title>
+    <link rel="stylesheet" href="/css/anfitrion/menu_anfitrion.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+
+            <div class="top-controls">
+                <button class="active">Menú principal</button>
+                <button onclick="window.location.href='/html/anfitrion/menu_micuentaAnfitrion.html'">Mi Cuenta</button>
+                <button id="gestionarBtn" onclick="window.location.href='/html/anfitrion/menu_gestionar.html'">Gestionar
+                    reservas</button>
+                <button id="publicarBtn" onclick="window.location.href='/html/anfitrion/menu_publicar.html'">Publicar
+                    propiedad</button>
+                <button class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="card-area" id="cards">
+            </section>
+
+            <aside class="detail empty" id="detailPanel">
+                Selecciona una propiedad para ver sus detalles.
+            </aside>
+        </main>
+    </div>
+
+    <script src="/js/menu_anfitrion.js"></script>
+</body>
+
+</html>

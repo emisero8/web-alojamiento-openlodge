@@ -1,0 +1,214 @@
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Body y fondo */
+body {
+    background: linear-gradient(135deg, #fffbe6, #fff);
+    color: #2d2d2d;
+}
+
+/* Contenedor general */
+.page {
+    max-width: 900px;
+    margin: 28px auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Logo y nombre */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    height: 60px;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #2e7d32;
+}
+
+/* Controles superiores */
+.top-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.top-controls button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #4caf50;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.top-controls button:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+.top-controls button.active {
+    background: #ffc107;
+    color: #333;
+}
+
+/* Botón cerrar sesión */
+.top-controls .logout-btn {
+    background: #fff;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+    transition: all 0.3s ease;
+}
+
+.top-controls .logout-btn:hover {
+    background: #d32f2f;
+    color: #fff;
+}
+
+/* Formulario */
+.formulario {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.formulario .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.formulario .campo.full {
+    grid-column: span 2;
+}
+
+.formulario label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+}
+
+.formulario input,
+.formulario textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Vista previa imágenes */
+.preview {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+/* Servicios */
+.servicios {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Acciones */
+.acciones {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #4caf50;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #d32f2f;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s ease;
+}
+
+.btn-danger:hover {
+    background: #b71c1c;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .formulario {
+        grid-template-columns: 1fr;
+    }
+
+    .acciones {
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .top-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .top-controls button,
+    .logout-btn {
+        width: 100%;
+    }
+}

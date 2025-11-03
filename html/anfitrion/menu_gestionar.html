@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Gestionar - OpenLodge</title>
+    <link rel="stylesheet" href="/css/anfitrion/menu_gestionar.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+            <div class="top-controls">
+                <button onclick="window.location.href='/html/anfitrion/menu_anfitrion.html'">Menú principal</button>
+                <button onclick="window.location.href='/html/anfitrion/menu_micuentaAnfitrion.html'">Mi Cuenta</button>
+                <button id="gestionarBtn" class="active">Gestionar reservas</button>
+                <button id="publicarBtn" onclick="window.location.href='/html/anfitrion/menu_publicar.html'">Publicar
+                    propiedad</button>
+                <button class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="solicitudes">
+                <h2>Reservas Confirmadas:</h2>
+                <div id="listaSolicitudes">
+                    <p>Cargando reservas...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/menu_gestionar.js"></script>
+</body>
+
+</html>

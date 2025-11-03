@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Pago - OpenLodge</title>
+    <link rel="stylesheet" href="/css/huesped/menu_pago.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+            <div class="controls" aria-label="Controles de búsqueda">
+                <button onclick="window.location.href='/html/huesped/menu_huesped.html'">Menú principal</button>
+                <button onclick="window.location.href='/html/huesped/menu_micuenta.html'">Mi Cuenta</button>
+                <button class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="detail" id="detailPanel">
+
+                <div class="title" id="propiedad-titulo">Cargando...</div>
+
+                <div class="image-large" id="carrusel">
+                    <img id="imgActual" src="/img/propiedades/default.png" alt="Imagen propiedad">
+                </div>
+
+                <div class="tickets-container" id="tickets-container">
+                </div>
+
+                <div class="section">
+                    <h3>Seleccione el medio de pago:</h3>
+                    <div class="radio-group">
+                        <label><input type="radio" name="medioPago" value="Efectivo"> Efectivo</label>
+                        <label><input type="radio" name="medioPago" value="Transferencia"> Transferencia
+                            bancaria</label>
+                        <label><input type="radio" name="medioPago" value="Tarjeta"> Pago con tarjeta</label>
+                    </div>
+                </div>
+
+                <div class="section buttons">
+                    <button class="btn-primary" id="realizarPago">Realizar pago</button>
+                    <button class="btn-ghost" id="cancelarPago">Cancelar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+<script src="/js/menu_pago.js"></script>
+
+</html>

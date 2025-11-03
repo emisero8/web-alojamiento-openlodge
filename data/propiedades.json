@@ -1,0 +1,162 @@
+[
+    {
+        "id": "1",
+        "title": "General Lopez 3234, General Alvear, Santa Fe",
+        "img": "/img/propiedades/1/IMG1.jpg",
+        "details": [
+            "2 habitaciones",
+            "1 baño",
+            "Wi-Fi disponible",
+            "Check-in 14:00",
+            "Precio: $45.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta"
+        ],
+        "price": 45000
+    },
+    {
+        "id": "2",
+        "title": "Av. Aristóbulo del Valle 7321, Barrio Guadalupe, Santa Fe",
+        "img": "/img/propiedades/2/IMG1.jpg",
+        "details": [
+            "1 habitación",
+            "1 baño",
+            "Cocina equipada",
+            "Cerca transporte",
+            "Precio: $30.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 30000
+    },
+    {
+        "id": "3",
+        "title": "Av. Aristóbulo del Valle 7246, Barrio Guadalupe, Santa Fe",
+        "img": "/img/propiedades/3/IMG1.jpg",
+        "details": [
+            "3 habitaciones",
+            "2 baños",
+            "Patio",
+            "Acepta mascotas",
+            "Precio: $80.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 80000
+    },
+    {
+        "id": "4",
+        "title": "Pedro Vittori 3658, Costanera Oeste, Santa Fe",
+        "img": "/img/propiedades/4/IMG1.jpg",
+        "details": [
+            "4 habitaciones",
+            "2 baño",
+            "Vista al parque",
+            "Limpieza incluida",
+            "Precio: $95.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta"
+        ],
+        "price": 95000
+    },
+    {
+        "id": "5",
+        "title": "Regimiento 12 de Infantería 4420, Barrio Alberdi, Santa Fe",
+        "img": "/img/propiedades/5/IMG1.jpg",
+        "details": [
+            "2 habitaciones",
+            "1 baño",
+            "Piscina compartida",
+            "Estacionamiento",
+            "Precio: $60.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 60000
+    },
+    {
+        "id": "6",
+        "title": "Marcial Candioti 1287, Barrio Centro, Santa Fe",
+        "img": "/img/propiedades/6/IMG1.jpg",
+        "details": [
+            "4 habitaciones",
+            "3 baños",
+            "Casa completa",
+            "Ideal para grupos",
+            "Precio: $120.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 120000
+    },
+    {
+        "id": "7",
+        "title": "Marcial Candioti 1287, Barrio Centro, Santa Fe",
+        "img": "/img/propiedades/7/IMG1.jpg",
+        "details": [
+            "4 habitaciones",
+            "3 baños",
+            "Casa completa",
+            "Ideal para grupos",
+            "Precio: $120.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 120000
+    },
+    {
+        "id": "8",
+        "title": "Marcial Candioti 1287, Barrio Centro, Santa Fe",
+        "img": "/img/propiedades/8/IMG1.jpg",
+        "details": [
+            "4 habitaciones",
+            "3 baños",
+            "Casa completa",
+            "Ideal para grupos",
+            "Precio: $120.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 120000
+    },
+    {
+        "id": "9",
+        "title": "Marcial Candioti 1287, Barrio Centro, Santa Fe",
+        "img": "/img/propiedades/9/IMG1.jpg",
+        "details": [
+            "4 habitaciones",
+            "3 baños",
+            "Casa completa",
+            "Ideal para grupos",
+            "Precio: $120.000/noche"
+        ],
+        "servicios": [
+            "WIFI",
+            "Pileta",
+            "Servicio de limpieza"
+        ],
+        "price": 120000
+    }
+]

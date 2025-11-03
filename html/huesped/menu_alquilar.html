@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquilar Propiedad - OpenLodge</title>
+    <link rel="stylesheet" href="/css/huesped/menu_alquilar.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+            <div class="controls" aria-label="Controles de búsqueda">
+                <button onclick="window.location.href='/html/huesped/menu_huesped.html'">Menú principal</button>
+                <button onclick="window.location.href='/html/huesped/menu_micuenta.html'">Mi Cuenta</button>
+                <button class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="detail" id="detailPanel">
+
+                <div class="title">Cargando propiedad...</div>
+
+                <div class="image-large" id="carrusel">
+                    <img id="imgActual" src="/img/propiedades/default.png" alt="Imagen propiedad">
+                </div>
+
+                <div class="divGral">
+                    <div class="section">
+                        <h3>Servicios incluidos:</h3>
+                        <div class="checkbox-group" id="servicios-group">
+                            <p>Cargando servicios...</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Complete los siguientes campos:</h3>
+                        <div id="capacidad-texto">Capacidad: Cargando...</div>
+
+                        <div>Fecha de ingreso: <input type="date" id="fecha-ingreso"></div>
+                        <div>Fecha de egreso: <input type="date" id="fecha-egreso"></div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Notas al locador:</h3>
+                        <textarea placeholder="Escriba aquí..." id="notas-locador"></textarea>
+                    </div>
+                </div>
+
+                <div class="section buttons">
+                    <button class="btn-primary" id="realizarReserva">Confirmar Reserva</button>
+                    <button class="btn-ghost" id="cancelarReserva">Cancelar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+<script src="/js/menu_alquilar.js"></script>
+
+</html>

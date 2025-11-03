@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mi Cuenta - OpenLodge</title>
+    <link rel="stylesheet" href="/css/huesped/menu_micuenta.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+            <div class="controls" aria-label="Controles de búsqueda">
+                <div>
+                    <button onclick="window.location.href='/html/huesped/menu_huesped.html'">Menú principal</button>
+                    <button class="active">Mi Cuenta</button>
+                    <button class="logout-btn">Cerrar sesión</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <aside class="profile" id="profile-panel">
+                <h2>Cargando...</h2>
+                <div class="avatar"></div>
+                <h3>Detalles de la cuenta:</h3>
+                <ul class="user-details" id="user-details-list">
+                    <li>Cargando...</li>
+                </ul>
+            </aside>
+
+            <section class="reservas">
+                <h2>Mis Reservas:</h2>
+                <div class="card-area" id="reservas-area">
+                    <p>Cargando reservas...</p>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/menu_micuenta.js"></script>
+</body>
+
+</html>

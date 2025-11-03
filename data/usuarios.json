@@ -1,0 +1,14 @@
+[
+    {
+        "usuario": "huesp",
+        "correo": "huesped@mail.com",
+        "clave": "1234",
+        "rol": "Huesped"
+    },
+    {
+        "usuario": "anfi",
+        "correo": "anfitrion@mail.com",
+        "clave": "abcd",
+        "rol": "Anfitrion"
+    }
+]

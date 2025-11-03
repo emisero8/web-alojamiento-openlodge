@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Cuenta (Anfitrión) - OpenLodge</title>
+    <link rel="stylesheet" href="/css/anfitrion/menu_micuentaAnfitrion.css">
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="logo-container">
+                <img src="/img/logoTerminado.png" alt="Logo OpenLodge" class="logo">
+                <h1 class="brand-name">OpenLodge</h1>
+            </div>
+            <div class="top-controls">
+                <button onclick="window.location.href='/html/anfitrion/menu_anfitrion.html'">Menú principal</button>
+
+                <button class="active">Mi Cuenta</button>
+
+                <button id="gestionarBtn" onclick="window.location.href='/html/anfitrion/menu_gestionar.html'">Gestionar
+                    reservas</button>
+                <button id="publicarBtn" onclick="window.location.href='/html/anfitrion/menu_publicar.html'">Publicar
+                    propiedad</button>
+
+                <button class="logout-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <main class="main">
+            <aside class="sidebar" id="profile-panel">
+                <h2>Bienvenido, <span id="nombreUsuario">Cargando...</span></h2>
+                <div class="foto-perfil">
+                    <img src="/img/user_placeholder.png" alt="Foto usuario">
+                </div>
+                <h3>Detalles de la cuenta:</h3>
+                <ul id="detallesCuenta" class="user-details">
+                    <li>Cargando...</li>
+                </ul>
+            </aside>
+
+        </main>
+    </div>
+
+    <script src="/js/menu_micuentaAnfitrion.js"></script>
+</body>
+
+</html>

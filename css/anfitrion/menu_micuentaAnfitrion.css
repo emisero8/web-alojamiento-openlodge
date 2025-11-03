@@ -1,0 +1,176 @@
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Body y fondo */
+body {
+    background: linear-gradient(135deg, #fffbe6, #fff);
+    color: #2d2d2d;
+}
+
+/* Contenedor general */
+.page {
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header (queda igual) */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    height: 60px;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #2e7d32;
+}
+
+.top-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.top-controls button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #4caf50;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.top-controls button:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+.top-controls button.active {
+    background: #ffc107;
+    color: #333;
+}
+
+/* Botón cerrar sesión */
+.top-controls .logout-btn {
+    background: #fff;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+    transition: all 0.3s ease;
+}
+
+.top-controls .logout-btn:hover {
+    background: #d32f2f;
+    color: #fff;
+}
+
+/* --- ¡MAIN LAYOUT MODIFICADO! --- */
+.main {
+    display: flex;
+    justify-content: center;
+    /* Centra la tarjeta de perfil horizontalmente */
+    align-items: center;
+    /* Centra la tarjeta verticalmente */
+    padding: 20px 0;
+    /* Añade espacio vertical */
+    /* (Se eliminan 'gap' y 'flex-wrap' porque solo hay 1 hijo) */
+}
+
+/* --- ¡SIDEBAR MODIFICADA! --- */
+.sidebar {
+    /* flex: 0.35 (BORRADO) */
+    /* minWidth: 240 (BORRADO) */
+    width: 500px;
+    /* ⬅️ Hecho "un poco más grande" */
+    max-width: 90%;
+    /* ⬅️ Se ajusta en pantallas chicas */
+
+    /* (El resto de estilos de la sidebar quedan igual) */
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.foto-perfil {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.foto-perfil img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidebar h3 {
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.sidebar ul.user-details {
+    /* ⬅️ Hecho más específico */
+    list-style: none;
+    /* ⬅️ CAMBIO (sin discos) */
+    margin-left: 0;
+    /* ⬅️ CAMBIO */
+    padding-left: 5px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.sidebar ul li {
+    margin-bottom: 5px;
+}
+
+
+/* --- SECCIÓN DE CONTENIDO OCULTA --- */
+.contenido {
+    display: none;
+}
+
+
+@media (max-width: 560px) {
+    .top-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .top-controls button,
+    .logout-btn {
+        width: 100%;
+    }
+}
