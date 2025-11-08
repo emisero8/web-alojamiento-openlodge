@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const correoInput = document.getElementById("correo");
     const passInput = document.getElementById("password");
 
-    // 1. Define la URL de tu API de Spring Boot
+    // Define la URL de la API
     const API_URL = "http://localhost:8080";
 
     form.addEventListener("submit", async (e) => {
@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            // 2. ¡Llamada a la API de Login!
             const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
@@ -30,18 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 }),
             });
 
-            // 3. Manejo de errores (ej: contraseña incorrecta)
+            // Manejo de errores
             if (!response.ok) {
                 // response.status 401 o 403 significa "no autorizado"
                 alert("Correo o contraseña incorrectos.");
                 return;
             }
 
-            // 4. ¡Éxito! Obtenemos los datos (token, rol, etc.)
+            // Obtenemos los datos (token, rol, etc)
             const data = await response.json();
 
-            // 5. Guardamos en localStorage (reemplaza a sessionStorage)
-            // localStorage persiste incluso si cierras el navegador
+            // Guardamos en localStorage que persiste incluso si cierro el navegador
             localStorage.setItem("auth_token", data.token);
             localStorage.setItem("user_rol", data.rol);
             localStorage.setItem("user_nombre", data.nombre);
@@ -49,11 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             alert(`Bienvenido ${data.rol}: ${data.nombre}`);
 
-            // 6. Redirigir según el rol
+            // Redirigir según el rol
             if (data.rol === "HUESPED") {
-                window.location.href = "/html/huesped/menu_huesped.html"; // Asegúrate que esta ruta sea correcta
+                window.location.href = "/html/huesped/menu_huesped.html";
             } else if (data.rol === "ANFITRION") {
-                window.location.href = "/html/anfitrion/menu_anfitrion.html"; // Asegúrate que esta ruta sea correcta
+                window.location.href = "/html/anfitrion/menu_anfitrion.html";
             } else {
                 alert("Rol desconocido, contacte al administrador.");
             }

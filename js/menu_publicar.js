@@ -1,9 +1,8 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
 let token = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. --- Verificación de Seguridad ---
+  // Verificación de Seguridad
   token = localStorage.getItem("auth_token");
   const rol = localStorage.getItem("user_rol");
 
@@ -13,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 2. --- Cargar Servicios desde la API ---
+  // Cargar Servicios desde la API
   cargarServicios();
 
-  // 3. --- Inicializar Botones ---
+  // Inicializar Botones
   initFormulario();
   initLogoutButton();
 });
@@ -33,7 +32,7 @@ async function cargarServicios() {
 
     const servicios = await response.json();
 
-    container.innerHTML = ""; // Limpiar "cargando..."
+    container.innerHTML = "";
     servicios.forEach(s => {
       const label = document.createElement('label');
       // Usamos el ID del servicio como el 'value'
@@ -52,38 +51,36 @@ function initFormulario() {
   const form = document.getElementById("formPublicar");
   const cancelarBtn = document.getElementById("cancelarBtn");
 
-  // Botón Cancelar
   cancelarBtn.addEventListener("click", () => {
     if (confirm("¿Seguro que deseas cancelar la publicación?")) {
       window.location.href = "menu_anfitrion.html";
     }
   });
 
-  // --- ¡LÓGICA DE PUBLICAR (API)! ---
+  // Logica de publicar
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // 1. Recolectar datos del formulario
+    // Recolectar datos del formulario
     const titulo = form.titulo.value;
     const direccion = form.direccion.value;
     const descripcion = form.descripcion.value;
     const precioPorNoche = parseFloat(form.precioPorNoche.value);
     const numeroHuespedes = parseInt(form.numeroHuespedes.value);
 
-    // 2. Recolectar Servicios (convertir a formato Objeto)
+    // Recolectar Servicios (convertir a formato Objeto)
     const serviciosSeleccionados = [];
     document.querySelectorAll("#servicios-container input:checked").forEach(chk => {
-      // El backend espera: { "id": 1 }, { "id": 2 }
       serviciosSeleccionados.push({ id: parseInt(chk.value) });
     });
 
-    // 3. Validaciones
+    // Validaciones
     if (!titulo || !direccion || !precioPorNoche || !numeroHuespedes) {
       alert("Por favor completa todos los campos.");
       return;
     }
 
-    // 4. Crear el objeto Propiedad (DTO) que espera el backend
+    // Crear el objeto Propiedad (DTO) que espera el backend
     const nuevaPropiedad = {
       titulo,
       direccion,
@@ -91,10 +88,9 @@ function initFormulario() {
       precioPorNoche,
       numeroHuespedes,
       servicios: serviciosSeleccionados
-      // No enviamos 'imagenPrincipalUrl', el backend la asigna
     };
 
-    // 5. ¡Llamar a la API para crear la propiedad!
+    // Llamar a la API para crear la propiedad
     try {
       const btnSubmit = form.querySelector("button[type='submit']");
       btnSubmit.disabled = true;
@@ -118,7 +114,6 @@ function initFormulario() {
         throw new Error("No se pudo publicar la propiedad.");
       }
 
-      // ¡Éxito!
       alert("Propiedad publicada con éxito.");
       window.location.href = "menu_anfitrion.html";
 
@@ -134,7 +129,7 @@ function initFormulario() {
 }
 
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
   const logoutBtn = document.querySelector(".logout-btn");
   if (logoutBtn) {

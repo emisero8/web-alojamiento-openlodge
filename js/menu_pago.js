@@ -1,14 +1,12 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
-let propiedadCache = null; // Guardamos la propiedad cargada
-let reservaDatos = {}; // Guardamos los datos de la reserva
+let propiedadCache = null; 
+let reservaDatos = {}; 
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. --- Verificación de Seguridad y Datos ---
+    // Verificación de Seguridad y Datos 
     const token = localStorage.getItem("auth_token");
     const rol = localStorage.getItem("user_rol");
 
-    // Obtenemos los datos que guardó 'menu_alquilar.js'
     const propiedadId = localStorage.getItem("propiedadIdParaAlquilar");
     const fechaInicio = localStorage.getItem("reservaFechaInicio");
     const fechaFin = localStorage.getItem("reservaFechaFin");
@@ -29,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Guardamos los datos de la reserva
     reservaDatos = { propiedadId, fechaInicio, fechaFin, notas };
 
-    // 2. --- Cargar Datos de la Propiedad desde la API ---
+    // Cargar Datos de la Propiedad desde la API 
     fetch(`${API_URL}/api/propiedades/${propiedadId}`, {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` }
@@ -39,15 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         })
         .then(propiedad => {
-            propiedadCache = propiedad; // Guardamos la propiedad
-            renderizarPagina(propiedad, reservaDatos); // Dibujamos todo
+            propiedadCache = propiedad; 
+            renderizarPagina(propiedad, reservaDatos); 
         })
         .catch(error => {
             console.error("Error cargando propiedad:", error);
             alert("Error al cargar la propiedad.");
         });
 
-    // 3. --- Inicializar botones ---
+    // Inicializar botones
     initBotonesDeAccion();
     initLogoutButton();
 });
@@ -62,7 +60,7 @@ function renderizarPagina(propiedad, reserva) {
     titleDiv.textContent = propiedad.titulo;
     imgActual.src = propiedad.imagenPrincipalUrl || "/img/propiedades/default.png";
 
-    // --- Calcular Costos ---
+    // Calcular Costos
     const ingreso = new Date(reserva.fechaInicio);
     const egreso = new Date(reserva.fechaFin);
     const noches = Math.round((egreso.getTime() - ingreso.getTime()) / (1000 * 60 * 60 * 24));
@@ -77,10 +75,9 @@ function renderizarPagina(propiedad, reserva) {
     });
 
     const totalCalculado = costoAlojamiento + costoServiciosTotal;
-    // Guardamos el total para el 'handlePago'
     reservaDatos.precioTotal = totalCalculado;
 
-    // --- Renderizar Resumen y Costos ---
+    // Renderizar Resumen y Costos
     ticketsContainer.innerHTML = `
         <div class="resumen">
             <h3>Resumen de la reserva</h3>
@@ -101,7 +98,7 @@ function renderizarPagina(propiedad, reserva) {
     `;
 }
 
-// Inicializa los botones "Realizar Pago" y "Cancelar"
+// Inicializa los botones
 function initBotonesDeAccion() {
     const btnPagar = document.getElementById("realizarPago");
     const btnCancelar = document.getElementById("cancelarPago");
@@ -109,7 +106,6 @@ function initBotonesDeAccion() {
 
     btnCancelar.addEventListener("click", () => {
         if (confirm("¿Está seguro de cancelar el pago?")) {
-            // Limpiamos solo los datos de la reserva en progreso
             localStorage.removeItem("propiedadIdParaAlquilar");
             localStorage.removeItem("reservaFechaInicio");
             localStorage.removeItem("reservaFechaFin");
@@ -118,7 +114,7 @@ function initBotonesDeAccion() {
         }
     });
 
-    // --- ¡LÓGICA DE PAGO (API)! ---
+    // Lógica de pago
     btnPagar.addEventListener("click", async () => {
         const medioPago = document.querySelector("input[name='medioPago']:checked");
 
@@ -127,7 +123,6 @@ function initBotonesDeAccion() {
             return;
         }
 
-        // 1. Crear el objeto DTO (ReservaRequest) que espera el backend
         const reservaParaAPI = {
             propiedadId: reservaDatos.propiedadId,
             fechaInicio: reservaDatos.fechaInicio,
@@ -140,7 +135,6 @@ function initBotonesDeAccion() {
         btnPagar.textContent = "Procesando...";
 
         try {
-            // 2. ¡Llamar a la API para crear la reserva!
             const response = await fetch(`${API_URL}/api/reservas`, {
                 method: 'POST',
                 headers: {
@@ -150,26 +144,26 @@ function initBotonesDeAccion() {
                 body: JSON.stringify(reservaParaAPI)
             });
 
-            // 3. Manejar respuesta
-            if (response.status === 409) { // Conflicto de fechas
+           
+            if (response.status === 409) { 
                 const errorMessage = await response.text();
                 alert(`Reserva Fallida: ${errorMessage}`);
-            } else if (response.status === 403) { // Error de permisos
+            } else if (response.status === 403) { 
                 alert("Error: Solo los huéspedes pueden reservar. Tu sesión puede haber expirado.");
                 window.location.href = "/html/login.html";
             } else if (!response.ok) {
                 throw new Error("No se pudo procesar la reserva.");
             } else {
-                // ¡Éxito!
+                
                 alert("¡Reserva confirmada con éxito!");
 
-                // Limpiamos el storage de la reserva en progreso
+                
                 localStorage.removeItem("propiedadIdParaAlquilar");
                 localStorage.removeItem("reservaFechaInicio");
                 localStorage.removeItem("reservaFechaFin");
                 localStorage.removeItem("reservaNotas");
 
-                window.location.href = "/html/huesped/menu_huesped.html"; // Volvemos al menú
+                window.location.href = "/html/huesped/menu_huesped.html"; 
             }
 
         } catch (error) {
@@ -182,12 +176,12 @@ function initBotonesDeAccion() {
     });
 }
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
     const logoutBtn = document.querySelector(".logout-btn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            localStorage.clear(); // Limpia todo el storage
+            localStorage.clear();
             window.location.href = "/html/login.html";
         });
     }

@@ -1,43 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("crearCuentaForm");
+  const form = document.getElementById("crearCuentaForm");
 
-    form.addEventListener("submit", (e) => {
+    const API_URL = "http://localhost:8080";
+
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const nombre = document.getElementById("nombre").value.trim();
+        const apellido = document.getElementById("apellido").value.trim();
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
-        const tipo = document.getElementById("tipo").value;
+        const tipo = document.getElementById("tipo").value; // 'huesped' o 'anfitrion'
+
+        // Validaciones
+        if (!nombre || !apellido || !email || !password || !tipo) {
+            alert("Por favor complete todos los campos.");
+            return;
+        }
 
         if (password.length < 6) {
             alert("La contraseña debe tener al menos 6 caracteres.");
             return;
         }
 
-        // Obtener usuarios guardados en localStorage o array vacío
-        const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-        // Verificar si el correo ya está registrado
-        const existe = usuarios.some(u => u.email === email);
-        if (existe) {
-            alert("Ya existe una cuenta con este correo.");
-            return;
-        }
-
-        // Crear usuario nuevo
-        const nuevoUsuario = {
-            nombre,
-            correo: email,
-            clave: password,
-            rol: tipo.charAt(0).toUpperCase() + tipo.slice(1) // Huesped / Anfitrion
+        const userData = {
+            nombre: nombre,
+            apellido: apellido,
+            email: email,
+            password: password,
+            rol: tipo.toUpperCase(),
         };
 
-        usuarios.push(nuevoUsuario);
+        // Solicitud HTTP POST al backend
+        try {
+            const response = await fetch(`${API_URL}/api/usuarios`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            });
 
-        // Guardar en localStorage
-        localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-        alert("Cuenta creada con éxito. Ahora puedes iniciar sesión.");
-        window.location.href = "/html/login.html";
+            if (response.status === 409) { // 409 Conflict (Email duplicado)
+                alert("El email ya se encuentra registrado.");
+            } else if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Error del servidor:", errorText);
+                alert(`Error de registro: ${errorText || "No se pudo crear la cuenta."}`);
+            } else {
+                // Éxito (Código 201 Created o 200 OK)
+                alert(
+                    "¡Tu cuenta ha sido creada exitosamente! Por favor, inicia sesión."
+                );
+                window.location.href = "/html/login.html";
+            }
+        } catch (error) {
+            console.error("Error de red o conexión:", error);
+            alert("Error de red: No se pudo conectar al servidor.");
+        }
     });
 });

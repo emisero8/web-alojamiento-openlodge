@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 2. --- Cargar Datos (Servicios y Propiedad) ---
+  //Cargar Datos (Servicios y Propiedad)
   Promise.all([
     fetch(`${API_URL}/api/servicios`, { headers: { 'Authorization': `Bearer ${token}` } }),
     fetch(`${API_URL}/api/propiedades/${propiedadIdParaEditar}`, { headers: { 'Authorization': `Bearer ${token}` } })
@@ -34,13 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!propiedadRes.ok) throw new Error("No se pudo cargar la propiedad");
 
       const serviciosMaestros = await serviciosRes.json();
-      const propiedad = await propiedadRes.json(); // ⬅️ 'propiedad' (con la URL) vive aquí
+      const propiedad = await propiedadRes.json();
 
-      // 3. --- Renderizar Formulario ---
       renderizarFormulario(propiedad, serviciosMaestros);
-
-      // 4. --- ¡CAMBIO! Movemos la inicialización del formulario AQUÍ ---
-      // Así, la función 'submit' tiene acceso a la 'propiedad' original
+    
       initFormulario(propiedad);
 
     })
@@ -49,11 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Error al cargar los datos para editar.");
     });
 
-  // 5. --- Inicializar Botón de Logout ---
+  // Inicializar Botón de Logout
   initLogoutButton();
 });
 
-// Llena el formulario con los datos de la propiedad
+// Formulario con los datos de la propiedad
 function renderizarFormulario(propiedad, serviciosMaestros) {
   const form = document.getElementById("formEditar");
   const serviciosContainer = document.getElementById("servicios-container");
@@ -65,11 +62,11 @@ function renderizarFormulario(propiedad, serviciosMaestros) {
   form.numeroHuespedes.value = propiedad.numeroHuespedes;
   form.descripcion.value = propiedad.descripcion;
 
-  // Crear un Set con los IDs de los servicios que la propiedad YA TIENE
+  // Crear un Set con los IDs de los servicios
   const serviciosQueTiene = new Set(propiedad.servicios.map(s => s.id));
 
   // Llenar checkboxes de servicios
-  serviciosContainer.innerHTML = ""; // Limpiar "cargando..."
+  serviciosContainer.innerHTML = "";
   serviciosMaestros.forEach(s => {
     const label = document.createElement('label');
     const isChecked = serviciosQueTiene.has(s.id) ? "checked" : "";
@@ -78,7 +75,6 @@ function renderizarFormulario(propiedad, serviciosMaestros) {
   });
 }
 
-// 6. ¡CAMBIO! La función ahora recibe la 'propiedad' original
 function initFormulario(propiedadOriginal) {
   const form = document.getElementById("formEditar");
   const cancelarBtn = document.getElementById("cancelarBtn");
@@ -90,24 +86,24 @@ function initFormulario(propiedadOriginal) {
     }
   });
 
-  // --- ¡LÓGICA DE GUARDAR (API PUT) CORREGIDA! ---
+  // Lógica de guardar
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // 1. Recolectar datos (queda igual)
+    // Recolectar datos
     const titulo = form.titulo.value;
     const direccion = form.direccion.value;
     const descripcion = form.descripcion.value;
     const precioPorNoche = parseFloat(form.precioPorNoche.value);
     const numeroHuespedes = parseInt(form.numeroHuespedes.value);
 
-    // 2. Recolectar Servicios (queda igual)
+    // Recolectar Servicios
     const serviciosSeleccionados = [];
     document.querySelectorAll("#servicios-container input:checked").forEach(chk => {
       serviciosSeleccionados.push({ id: parseInt(chk.value) });
     });
 
-    // 3. Crear el objeto Propiedad (DTO)
+    // Crear el objeto Propiedad
     const propiedadActualizada = {
       titulo,
       direccion,
@@ -115,13 +111,10 @@ function initFormulario(propiedadOriginal) {
       precioPorNoche,
       numeroHuespedes,
       servicios: serviciosSeleccionados,
-      // 7. ¡AQUÍ ESTÁ LA CORRECCIÓN!
-      // Volvemos a enviar la URL de la imagen que ya tenía,
-      // para que el backend no la ponga en NULL.
       imagenPrincipalUrl: propiedadOriginal.imagenPrincipalUrl
     };
 
-    // 4. ¡Llamar a la API (PUT)!
+    // Llamar a la API
     try {
       const btnSubmit = form.querySelector("button[type='submit']");
       btnSubmit.disabled = true;
@@ -145,7 +138,6 @@ function initFormulario(propiedadOriginal) {
         throw new Error("No se pudo guardar la propiedad.");
       }
 
-      // ¡Éxito!
       alert("Propiedad actualizada con éxito.");
       localStorage.removeItem("propiedadIdParaEditar");
       window.location.href = "menu_anfitrion.html";
@@ -161,7 +153,7 @@ function initFormulario(propiedadOriginal) {
   });
 }
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
   const logoutBtn = document.querySelector(".logout-btn");
   if (logoutBtn) {

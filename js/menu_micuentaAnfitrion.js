@@ -1,8 +1,7 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. --- Verificación de Seguridad ---
+    // Verificación de Seguridad
     const token = localStorage.getItem("auth_token");
     const rol = localStorage.getItem("user_rol");
     const nombre = localStorage.getItem("user_nombre") || "Anfitrión";
@@ -15,8 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // 2. --- Cargar Conteo de Propiedades ---
-    // (Solo llamamos a la API para obtener el N° de propiedades)
+    // Cargar Conteo de Propiedades
     fetch(`${API_URL}/api/propiedades/mis-propiedades`, {
         method: 'GET',
         headers: {
@@ -29,16 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         })
         .then(propiedades => {
-            // 3. --- Renderizar Perfil (con datos de localStorage y el conteo) ---
+            // Renderizar Perfil
             renderizarPerfil(nombre, apellido, email, propiedades.length);
         })
         .catch(error => {
             console.error("Error cargando datos:", error);
-            // Renderizar perfil incluso si falla el conteo
             renderizarPerfil(nombre, apellido, email, "Error");
         });
 
-    // 4. --- Inicializar botón de Logout ---
+    // Inicializar botón de Logout
     initLogoutButton();
 });
 
@@ -47,7 +44,6 @@ function renderizarPerfil(nombre, apellido, email, conteoPropiedades) {
     const detallesCuenta = document.getElementById("detallesCuenta");
 
     if (nombreUsuario) {
-        // Usamos .innerHTML para que el <span id="nombreUsuario"> se reemplace
         nombreUsuario.innerHTML = `${nombre} ${apellido}`;
     }
 
@@ -60,7 +56,7 @@ function renderizarPerfil(nombre, apellido, email, conteoPropiedades) {
     }
 }
 
-// --- Funciones de Logout ---
+// Funciones de Logout
 function initLogoutButton() {
     const logoutBtn = document.querySelector(".logout-btn");
     if (logoutBtn) {
@@ -69,6 +65,6 @@ function initLogoutButton() {
 }
 
 function logout() {
-    localStorage.clear(); // Limpia todo
+    localStorage.clear();
     window.location.href = "/html/login.html";
 }

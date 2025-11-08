@@ -1,9 +1,8 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
-let token = null; // Token global para este script
+let token = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. --- Verificación de Seguridad ---
+  // Verificación de Seguridad
   token = localStorage.getItem("auth_token");
   const rol = localStorage.getItem("user_rol");
   const nombre = localStorage.getItem("user_nombre") || "Usuario";
@@ -16,13 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 2. --- Renderizar Perfil (con datos de localStorage) ---
   renderizarPerfil(nombre, apellido, email);
 
-  // 3. --- Cargar Reservas desde la API ---
   cargarMisReservas();
 
-  // 4. --- Inicializar botón de Logout ---
   initLogoutButton();
 });
 
@@ -66,7 +62,6 @@ function renderizarReservas(reservas) {
   const reservasContainer = document.getElementById("reservas-area");
   if (!reservasContainer) return;
 
-  // Actualizamos el contador en el perfil
   const reservasCountEl = document.getElementById("conteo-reservas");
   if (reservasCountEl) {
     reservasCountEl.textContent = `• Nº de reservas: ${reservas.length}`;
@@ -77,16 +72,14 @@ function renderizarReservas(reservas) {
     return;
   }
 
-  // Obtenemos la fecha de "hoy" (sin la hora)
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
 
   reservasContainer.innerHTML = reservas.map(r => {
-    // Comprobamos si la reserva es futura
-    const fechaInicioReserva = new Date(r.fechaInicio + 'T00:00:00-03:00'); // Asumir zona horaria local
+
+    const fechaInicioReserva = new Date(r.fechaInicio + 'T00:00:00-03:00');
     const esFutura = fechaInicioReserva > hoy;
 
-    // Generamos el botón de cancelar SÓLO si es futura
     const botonCancelarHTML = esFutura
       ? `<button class="btn-ghost btn-cancelar-reserva" data-id="${r.id}">Cancelar reserva</button>`
       : `<button class="btn-ghost" disabled title="No se puede cancelar una reserva pasada.">Reserva completada</button>`; // Botón deshabilitado
@@ -109,11 +102,10 @@ function renderizarReservas(reservas) {
         `;
   }).join('');
 
-  // Damos funcionalidad a los botones de "Cancelar"
   initCancelarBotones();
 }
 
-// --- Lógica de Botones ---
+//Lógica de Botones
 
 function initCancelarBotones() {
   document.querySelectorAll(".btn-cancelar-reserva").forEach(btn => {
@@ -138,14 +130,14 @@ async function cancelarReserva(reservaId) {
     if (response.status === 403) {
       alert("Error: No tienes permiso o tu sesión expiró.");
       logout();
-    } else if (response.status === 409 || response.status === 400) { // 409/400 (Conflicto/Bad Request)
+    } else if (response.status === 409 || response.status === 400) { 
       const errorMessage = await response.text();
       alert(`No se pudo cancelar: ${errorMessage}`);
     } else if (!response.ok && response.status !== 204) {
       throw new Error("No se pudo cancelar la reserva.");
     } else {
       alert("Reserva cancelada exitosamente.");
-      cargarMisReservas(); // Recargamos la lista
+      cargarMisReservas();
     }
 
   } catch (err) {

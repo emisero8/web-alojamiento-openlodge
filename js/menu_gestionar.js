@@ -1,10 +1,9 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
-let token = null; // Guardamos el token globalmente en esta pantalla
+let token = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. --- Verificación de Seguridad ---
-    token = localStorage.getItem("auth_token"); // Asignamos el token
+    // Verificación de Seguridad 
+    token = localStorage.getItem("auth_token");
     const rol = localStorage.getItem("user_rol");
 
     if (!token || rol !== "ANFITRION") {
@@ -13,14 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // 2. --- Cargar Reservas ---
+    // Cargar Reservas
     cargarReservas();
-
-    // 3. --- Inicializar botón de Logout ---
     initLogoutButton();
 });
 
-// Cargar Reservas desde la API
 async function cargarReservas() {
     const listaSolicitudes = document.getElementById("listaSolicitudes");
     listaSolicitudes.innerHTML = "<p>Cargando reservas...</p>";
@@ -32,7 +28,7 @@ async function cargarReservas() {
         });
 
         if (response.status === 403) {
-            logout(); // Sesión expirada
+            logout();
             return;
         }
         if (!response.ok) {
@@ -51,7 +47,7 @@ async function cargarReservas() {
 // Renderizar las tarjetas de reserva
 function renderReservas(reservas) {
     const listaSolicitudes = document.getElementById("listaSolicitudes");
-    listaSolicitudes.innerHTML = ""; // Limpiar "cargando"
+    listaSolicitudes.innerHTML = "";
 
     if (reservas.length === 0) {
         listaSolicitudes.innerHTML = "<p>No hay reservas confirmadas.</p>";
@@ -61,7 +57,6 @@ function renderReservas(reservas) {
     reservas.forEach((reserva) => {
         const div = document.createElement("div");
         div.className = "solicitud";
-        // Usamos los campos de la API
         div.innerHTML = `
             <h3>${reserva.propiedad.titulo}</h3>
             <p>Huésped: ${reserva.huesped.nombre} ${reserva.huesped.apellido}</p>
@@ -75,24 +70,21 @@ function renderReservas(reservas) {
         listaSolicitudes.appendChild(div);
     });
 
-    // Inicializar los botones de cancelar
+    // Botones de cancelar
     initCancelarBotones();
 }
 
-// Añadir listeners a los botones "Cancelar"
 function initCancelarBotones() {
     document.querySelectorAll(".btn-cancelar").forEach(btn => {
         btn.addEventListener("click", (e) => {
             const reservaId = e.target.getAttribute("data-id");
             const reserva = e.target.closest(".solicitud").querySelector("h3").textContent;
 
-            // Pasamos el ID y el nombre de la propiedad para el confirm
             cancelarReserva(reservaId, reserva);
         });
     });
 }
 
-// Función para llamar a la API DELETE
 async function cancelarReserva(reservaId, nombrePropiedad) {
     if (!confirm(`¿Está seguro de que desea cancelar esta reserva para "${nombrePropiedad}"? Esta acción no se puede deshacer.`)) {
         return;
@@ -109,11 +101,11 @@ async function cancelarReserva(reservaId, nombrePropiedad) {
         if (response.status === 403) {
             alert("Error: No tienes permiso para cancelar esta reserva o tu sesión expiró.");
             logout();
-        } else if (!response.ok && response.status !== 204) { // 204 = Éxito sin contenido
+        } else if (!response.ok && response.status !== 204) { 
             throw new Error("No se pudo cancelar la reserva.");
         } else {
             alert("Reserva cancelada exitosamente.");
-            cargarReservas(); // Recargamos la lista
+            cargarReservas(); 
         }
 
     } catch (err) {
@@ -122,7 +114,7 @@ async function cancelarReserva(reservaId, nombrePropiedad) {
     }
 }
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
     const logoutBtn = document.querySelector(".logout-btn");
     if (logoutBtn) {

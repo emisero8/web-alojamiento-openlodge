@@ -1,24 +1,22 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
-let properties = []; // Array global para guardar las propiedades de la API
+let properties = []; 
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. --- Verificación de Seguridad ---
+  // Verificación de Seguridad
   const token = localStorage.getItem("auth_token");
   const rol = localStorage.getItem("user_rol");
 
   if (!token || rol !== "HUESPED") {
     alert("Acceso denegado. Por favor, inicia sesión como Huésped.");
-    window.location.href = "/html/login.html"; // Asegúrate que esta ruta sea correcta
+    window.location.href = "/html/login.html";
     return;
   }
 
-  // 2. --- Cargar Propiedades desde la API ---
+  // Cargar Propiedades desde la API
   fetch(`${API_URL}/api/propiedades`, {
     method: 'GET',
     headers: {
-      // (Opcional) Envía el token si la ruta GET /api/propiedades se vuelve privada
-      // 'Authorization': `Bearer ${token}`
+
     }
   })
     .then(response => {
@@ -28,22 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then(data => {
-      properties = data; // Guardamos los datos de la API
-      renderCards(properties); // Dibujamos las tarjetas
+      properties = data;
+      renderCards(properties);
     })
     .catch(error => {
       console.error("Error cargando propiedades:", error);
       alert("Error al cargar propiedades desde el servidor.");
     });
 
-  // 3. --- Inicializar todos los botones y filtros ---
+  // Inicializar los botones y filtros
   initFiltroModal();
   initBusqueda();
   initFiltroPrecio();
   initLogoutButton();
 });
 
-// Renderizar tarjetas en el área izquierda
 function renderCards(propiedadesAMostrar) {
   const cardsContainer = document.getElementById('cards');
   if (!cardsContainer) return;
@@ -60,10 +57,9 @@ function renderCards(propiedadesAMostrar) {
         </article>
     `).join('');
 
-  initCardButtons(); // activar botones después de renderizar
+  initCardButtons();
 }
 
-// Activar evento a todos los botones "Ver más detalles"
 function initCardButtons() {
   const buttons = document.querySelectorAll('.seeBtn');
   buttons.forEach(btn => {
@@ -80,7 +76,7 @@ function initCardButtons() {
 // Mostrar detalles de la propiedad seleccionada
 function showDetails(id) {
   const detailPanel = document.getElementById('detailPanel');
-  const prop = properties.find(p => p.id == id); // Usamos == por si 'id' es string
+  const prop = properties.find(p => p.id == id); 
 
   if (!prop) {
     detailPanel.className = 'detail empty';
@@ -90,7 +86,6 @@ function showDetails(id) {
 
   detailPanel.className = 'detail';
 
-  // Convertimos la lista de objetos 'servicios' en <li>
   const serviciosHtml = prop.servicios.map(s => `<li>${s.nombre} (+${s.costo})</li>`).join('');
 
   // Usamos los campos de la API: 'titulo', 'imagenPrincipalUrl', 'descripcion'
@@ -117,10 +112,8 @@ function showDetails(id) {
   document.getElementById('rentBtn').addEventListener('click', (e) => {
     const propiedadId = e.target.getAttribute('data-id');
 
-    // Guardamos el ID de la propiedad que queremos alquilar
     localStorage.setItem('propiedadIdParaAlquilar', propiedadId);
 
-    // Redirigir a menu_alquilar.html
     window.location.href = `menu_alquilar.html`;
   });
 
@@ -131,7 +124,7 @@ function showDetails(id) {
   });
 }
 
-// --- Lógica de Filtros (Actualizada para la API) ---
+// Lógica de Filtros
 
 function initFiltroModal() {
   const modal = document.getElementById("modalFiltro");
@@ -194,18 +187,15 @@ function initFiltroPrecio() {
   });
 }
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
-  // Buscamos el botón por su clase, ya que quitamos el onclick
   const logoutBtn = document.querySelector(".logout-btn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      // Limpiamos localStorage
       localStorage.removeItem("auth_token");
       localStorage.removeItem("user_rol");
       localStorage.removeItem("user_nombre");
       localStorage.removeItem("user_email");
-      // Redirigimos al login
       window.location.href = "/html/login.html";
     });
   }

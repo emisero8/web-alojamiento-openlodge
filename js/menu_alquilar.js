@@ -1,9 +1,8 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
 let propiedadCache = null; // Guardamos la propiedad cargada
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. --- Verificación de Seguridad ---
+    // Verificación de Seguridad
     const token = localStorage.getItem("auth_token");
     const rol = localStorage.getItem("user_rol");
     const propiedadId = localStorage.getItem("propiedadIdParaAlquilar");
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // 2. --- Cargar Datos de la Propiedad desde la API ---
+    // Cargar Datos de la Propiedad desde la API
     fetch(`${API_URL}/api/propiedades/${propiedadId}`, {
         method: 'GET',
         headers: {
@@ -32,39 +31,36 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         })
         .then(propiedad => {
-            propiedadCache = propiedad; // Guardamos la propiedad
-            renderizarDetalles(propiedad); // Dibujamos la pantalla
+            propiedadCache = propiedad;
+            renderizarDetalles(propiedad);
         })
         .catch(error => {
             console.error("Error cargando propiedad:", error);
             alert("Error al cargar la propiedad.");
         });
 
-    // 3. --- Inicializar botones ---
+    // Inicializar botones
     initBotonesDeAccion();
     initLogoutButton();
 });
 
 
 function renderizarDetalles(prop) {
-    // --- Referencias DOM ---
     const titleDiv = document.querySelector('.detail .title');
     const imgActual = document.getElementById("imgActual");
     const serviciosGroup = document.getElementById("servicios-group");
     const capacidadTexto = document.getElementById("capacidad-texto");
 
-    // --- Llenar datos ---
     titleDiv.textContent = prop.titulo;
     imgActual.src = prop.imagenPrincipalUrl || "/img/propiedades/default.png";
     capacidadTexto.textContent = `Capacidad: ${prop.numeroHuespedes} huéspedes`;
 
-    // --- Llenar Servicios ---
-    serviciosGroup.innerHTML = ''; // Limpiar "cargando..."
+    // Llenar Servicios
+    serviciosGroup.innerHTML = '';
     if (prop.servicios && prop.servicios.length > 0) {
         prop.servicios.forEach(s => {
             const label = document.createElement('label');
             label.className = 'checkbox-row';
-            // Creamos un checkbox "falso" (solo visual)
             label.innerHTML = `
                 <div class"checkbox checked"></div> 
                 <span>${s.nombre} (+$${s.costo.toLocaleString()})</span>
@@ -85,19 +81,19 @@ function initBotonesDeAccion() {
         window.location.href = "/html/huesped/menu_huesped.html";
     });
 
-    // --- ¡LÓGICA DE RESERVA (API)! ---
+    // Lógica de reserva
     btnReserva.addEventListener("click", async () => {
         if (!propiedadCache) {
             alert("Error: La propiedad no se ha cargado.");
             return;
         }
 
-        // 1. Obtener datos del formulario
+        // Obtener datos del formulario
         const fechaIngreso = document.getElementById("fecha-ingreso").value;
         const fechaEgreso = document.getElementById("fecha-egreso").value;
         const notas = document.getElementById("notas-locador").value;
 
-        // 2. Validaciones
+        // Validaciones
         if (!fechaIngreso || !fechaEgreso) {
             alert("Debe ingresar fecha de ingreso y egreso.");
             return;
@@ -107,7 +103,7 @@ function initBotonesDeAccion() {
             return;
         }
 
-        // 3. Calcular Precio Total (como en MenuPagoScreen de React)
+        // Calcular Precio Total
         const fIngreso = new Date(fechaIngreso);
         const fEgreso = new Date(fechaEgreso);
         const noches = Math.round((fEgreso.getTime() - fIngreso.getTime()) / (1000 * 60 * 60 * 24));
@@ -124,7 +120,7 @@ function initBotonesDeAccion() {
         });
         const precioTotalCalculado = costoAlojamiento + costoServiciosTotal;
 
-        // 4. Confirmación
+        // Confirmación
         const confirmar = confirm(`¿Confirmar reserva?\n\n` +
             `Propiedad: ${propiedadCache.titulo}\n` +
             `Fechas: ${fechaIngreso} al ${fechaEgreso} (${noches} noches)\n` +
@@ -132,7 +128,7 @@ function initBotonesDeAccion() {
         );
         if (!confirmar) return;
 
-        // 5. Crear objeto ReservaRequest (el DTO del backend)
+        // Crear objeto ReservaRequest
         const reservaRequest = {
             propiedadId: propiedadCache.id,
             fechaInicio: fechaIngreso,
@@ -141,18 +137,17 @@ function initBotonesDeAccion() {
             notas: notas,
         };
 
-        // 6. ¡Llamar a la API para crear la reserva!
+        // Llamar a la API para crear la reserva
         localStorage.setItem('propiedadIdParaAlquilar', propiedadCache.id);
         localStorage.setItem('reservaFechaInicio', fechaIngreso);
         localStorage.setItem('reservaFechaFin', fechaEgreso);
         localStorage.setItem('reservaNotas', notas);
 
-        // Y redirigimos a la pantalla de pago
         window.location.href = "/html/huesped/menu_pago.html";
     });
 }
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
     const logoutBtn = document.querySelector(".logout-btn");
     if (logoutBtn) {

@@ -1,9 +1,8 @@
-// Definimos la URL de tu API
 const API_URL = "http://localhost:8080";
-let properties = []; // Array global para guardar las propiedades del anfitrión
+let properties = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. --- Verificación de Seguridad ---
+  // Verificación de Seguridad
   const token = localStorage.getItem("auth_token");
   const rol = localStorage.getItem("user_rol");
 
@@ -13,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // 2. --- Cargar Propiedades (Ruta Protegida) ---
+  // Cargar Propiedades
   cargarPropiedades(token);
 
-  // 3. --- Inicializar botón de Logout ---
+  // Inicializar botón de Logout
   initLogoutButton();
 });
 
@@ -40,8 +39,8 @@ function cargarPropiedades(token) {
       return response.json();
     })
     .then(data => {
-      properties = data; // Guardamos los datos
-      renderCards();     // Dibujamos las tarjetas
+      properties = data;
+      renderCards();
     })
     .catch(error => {
       console.error("Error cargando mis propiedades:", error);
@@ -139,7 +138,7 @@ function editarPropiedad(id) {
   window.location.href = "/html/anfitrion/menu_editar.html";
 }
 
-// Dar de baja propiedad (¡AHORA LLAMA A LA API!)
+// Dar de baja propiedad
 async function darDeBaja(id) {
   if (!confirm("¿Seguro que deseas dar de baja esta propiedad?")) return;
 
@@ -158,13 +157,11 @@ async function darDeBaja(id) {
       alert("Error: No tienes permiso para borrar esta propiedad o tu sesión expiró.");
       logout();
     } else if (response.status === 409) {
-      // ¡Manejamos el error de reservas!
       const errorMessage = await response.text();
       alert(`Acción Bloqueada: ${errorMessage}`);
     } else if (!response.ok && response.status !== 204) {
       throw new Error("No se pudo eliminar la propiedad.");
     } else {
-      // ¡Éxito!
       alert("Propiedad eliminada correctamente.");
 
       // Recargamos las propiedades desde la API
@@ -182,15 +179,15 @@ async function darDeBaja(id) {
   }
 }
 
-// --- Botón de Cerrar Sesión ---
+// Botón de Cerrar Sesión
 function initLogoutButton() {
   const logoutBtn = document.querySelector(".logout-btn");
   if (logoutBtn) {
-    logoutBtn.addEventListener("click", logout); // Llama a la función logout
+    logoutBtn.addEventListener("click", logout);
   }
 }
 
 function logout() {
-  localStorage.clear(); // Limpia todo
+  localStorage.clear();
   window.location.href = "/html/login.html";
 }
